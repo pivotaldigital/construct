@@ -1,9 +1,9 @@
 import React from 'react';
 import { Stack, useTheme } from '@mui/material';
 
-import InspectorDrawer, { INSPECTOR_DRAWER_WIDTH } from './App/InspectorDrawer/index.tsx';
-import SamplesDrawer, { SAMPLES_DRAWER_WIDTH } from './App/SamplesDrawer/index.tsx';
-import TemplatePanel from './App/TemplatePanel/index.tsx';
+import InspectorDrawer, { INSPECTOR_DRAWER_WIDTH } from './App/InspectorDrawer';
+import SamplesDrawer, { SAMPLES_DRAWER_WIDTH } from './App/SamplesDrawer';
+import TemplatePanel from './App/TemplatePanel';
 import { useInspectorDrawerOpen, useSamplesDrawerOpen } from './documents/editor/EditorContext';
 
 function useDrawerTransition(cssProperty: 'margin-left' | 'margin-right', open: boolean) {
