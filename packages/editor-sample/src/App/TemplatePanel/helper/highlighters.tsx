@@ -1,13 +1,11 @@
-import hljs from 'highlight.js/lib/core';
-import jsonHighlighter from 'highlight.js/lib/languages/json';
-import xmlHighlighter from 'highlight.js/lib/languages/xml';
+import hljs from 'highlight.js';
 import prettierPluginBabel from 'prettier/plugins/babel';
 import prettierPluginEstree from 'prettier/plugins/estree';
 import prettierPluginHtml from 'prettier/plugins/html';
 import { format } from 'prettier/standalone';
 
-hljs.registerLanguage('json', jsonHighlighter);
-hljs.registerLanguage('html', xmlHighlighter);
+hljs.registerLanguage('json', require('highlight.js/lib/languages/json'));
+hljs.registerLanguage('html', require('highlight.js/lib/languages/xml'));
 
 export async function html(value: string): Promise<string> {
   const prettyValue = await format(value, {
