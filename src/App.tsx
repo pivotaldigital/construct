@@ -1,6 +1,6 @@
 import React from 'react';
 import { Stack, useTheme } from '@mui/material';
-import { useInspectorDrawerOpen, useSamplesDrawerOpen } from './documents/editor/EditorContext';
+import { useInspectorDrawerOpen, useSamplesDrawerOpen } from './documents/editor/EditorContext.tsx';
 import InspectorDrawer, { INSPECTOR_DRAWER_WIDTH } from './App/InspectorDrawer';
 import SamplesDrawer, { SAMPLES_DRAWER_WIDTH } from './App/SamplesDrawer';
 import TemplatePanel from './App/TemplatePanel';
