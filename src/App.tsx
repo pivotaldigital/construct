@@ -1,44 +1,40 @@
 import React from 'react';
-import { Box } from '@mui/material';
-import { Reader } from '@usewaypoint/email-builder';
+import { Stack, useTheme } from '@mui/material';
 
-// Sample email template configuration
-const SAMPLE_EMAIL = {
-  root: {
-    type: 'EmailLayout',
-    data: {
-      backdropColor: '#F8F8F8',
-      canvasColor: '#FFFFFF',
-      textColor: '#242424',
-      fontFamily: 'MODERN_SANS',
-      childrenIds: ['welcome-text']
-    }
-  },
-  'welcome-text': {
-    type: 'Text',
-    data: {
-      style: {
-        fontWeight: 'normal',
-        padding: {
-          top: 16,
-          bottom: 16,
-          right: 24,
-          left: 24
-        }
-      },
-      props: {
-        text: 'Welcome to Email Builder!'
-      }
-    }
-  }
-};
+import InspectorDrawer, { INSPECTOR_DRAWER_WIDTH } from './components/InspectorDrawer';
+import SamplesDrawer, { SAMPLES_DRAWER_WIDTH } from './components/SamplesDrawer';
+import TemplatePanel from './components/TemplatePanel';
+import { useInspectorDrawerOpen, useSamplesDrawerOpen } from './documents/editor/EditorContext';
+
+function useDrawerTransition(cssProperty: 'margin-left' | 'margin-right', open: boolean) {
+  const { transitions } = useTheme();
+  return transitions.create(cssProperty, {
+    easing: !open ? transitions.easing.sharp : transitions.easing.easeOut,
+    duration: !open ? transitions.duration.leavingScreen : transitions.duration.enteringScreen,
+  });
+}
 
 export default function App() {
+  const inspectorDrawerOpen = useInspectorDrawerOpen();
+  const samplesDrawerOpen = useSamplesDrawerOpen();
+
+  const marginLeftTransition = useDrawerTransition('margin-left', samplesDrawerOpen);
+  const marginRightTransition = useDrawerTransition('margin-right', inspectorDrawerOpen);
+
   return (
-    <Box sx={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <Box sx={{ width: '600px', bgcolor: 'white', boxShadow: 1 }}>
-        <Reader document={SAMPLE_EMAIL} rootBlockId="root" />
-      </Box>
-    </Box>
+    <>
+      <InspectorDrawer />
+      <SamplesDrawer />
+
+      <Stack
+        sx={{
+          marginRight: inspectorDrawerOpen ? `${INSPECTOR_DRAWER_WIDTH}px` : 0,
+          marginLeft: samplesDrawerOpen ? `${SAMPLES_DRAWER_WIDTH}px` : 0,
+          transition: [marginLeftTransition, marginRightTransition].join(', '),
+        }}
+      >
+        <TemplatePanel />
+      </Stack>
+    </>
   );
 }
